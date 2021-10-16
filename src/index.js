@@ -19,10 +19,24 @@ app.post("/account", (req, res) => {
     cpf,
     name,
     id: uuidv4(),
-    statements: []
+    statements: [{id: "teste"}]
   })
   console.log(customers)
   res.status(201).json({ message: "account created" })
+})
+
+app.get("/all", (req, res) => {
+  if(!!customers) return res.status(400).json({ message: "No accout created" })
+  return res.json({ data: customers })
+})
+
+app.get("/statement/:cpf", (req, res) => {
+  const { cpf } = req.params
+
+  const accountIndex = customers.findIndex((customer) => customer.cpf === cpf)
+  if(accountIndex === -1) return res.status(400).json({ message: "This account does not exists" })
+  const accountStatement = customers[accountIndex].statements
+  return res.status(200).json({ data: accountStatement })
 })
 
 app.listen(3000)
