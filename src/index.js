@@ -8,7 +8,6 @@ const customers = []
 
 app.post("/account", (req, res) => {
   const { cpf, name } = req.body
-  console.log(cpf, name)
 
   const costumerExist = customers.some((customer) => customer.cpf === cpf)
   if(costumerExist) {
@@ -32,11 +31,11 @@ app.get("/all", (req, res) => {
 
 app.get("/statement/:cpf", (req, res) => {
   const { cpf } = req.params
-
-  const accountIndex = customers.findIndex((customer) => customer.cpf === cpf)
-  if(accountIndex === -1) return res.status(400).json({ message: "This account does not exists" })
-  const accountStatement = customers[accountIndex].statements
-  return res.status(200).json({ data: accountStatement })
+  const account = customers.find((customer) => customer.cpf == cpf)
+ 
+  // status(204) == no content?
+  if(!account) return res.status(400).json({ message: "This account does not exists" })
+  return res.status(200).json({ data: account.statements })
 })
 
 app.listen(3000)
