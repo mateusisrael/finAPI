@@ -26,7 +26,7 @@ app.post("/account", (req, res) => {
 })
 
 app.get("/all", (req, res) => {
-  if(!!customers) return res.status(400).json({ message: "No accout created" })
+  if(customers.length <= 0) return res.status(400).json({ message: "No account created" })
   return res.json({ data: customers })
 })
 
