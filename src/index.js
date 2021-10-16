@@ -29,8 +29,8 @@ app.get("/all", (req, res) => {
   return res.json({ data: customers })
 })
 
-app.get("/statement/:cpf", (req, res) => {
-  const { cpf } = req.params
+app.get("/statement/", (req, res) => {
+  const { cpf } = req.headers
   const account = customers.find((customer) => customer.cpf == cpf)
  
   // status(204) == no content?
