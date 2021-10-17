@@ -41,6 +41,18 @@ app.post("/account", (req, res) => {
   res.status(201).json({ message: "account created" })
 })
 
+app.put(
+  "/account",
+  verifyIfAccountExist,
+  (req, res) => {
+    const { name } = req.body
+    const account = req.account
+    account.name = name
+
+    res.status(201).send()
+  }
+)
+
 app.get(
   "/all",
   checkForCustomers,
