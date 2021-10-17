@@ -53,6 +53,22 @@ app.get(
   (req, res) => res.status(200).json({ data: req.account.statements })
 )
 
+app.get(
+  "/statement/date/",
+  verifyIfAccountExist,
+  (req, res) => {
+    const account = req.account
+    const { date } = req.query
+    const dateFormat = new Date(date + " 00:00")
+
+    const filteredStatements = account.statements.filter((statement) => {
+      return statement.date.toDateString() === new Date(dateFormat).toDateString()
+    })
+
+    return res.json({ "data": filteredStatements })
+  }
+)
+
 app.post(
   "/deposit",
   verifyIfAccountExist,
