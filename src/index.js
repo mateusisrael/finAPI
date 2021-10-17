@@ -62,8 +62,9 @@ app.post(
     const accountIndex = customers.findIndex(customer => customer.cpf === account.cpf)
     customers[accountIndex].statements.push({
       depositId: uuidv4(),
-      date: Date.now(),
-      value
+      date: new Date(),
+      type: 'credit',
+      amount: value
     })
     res.status(200).json({ message: "Successfully deposited" })
   }
