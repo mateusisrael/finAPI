@@ -59,8 +59,7 @@ app.post(
   (req, res) => {
     const { amount, description } = req.body
     const account = req.account
-    const accountIndex = customers.findIndex(customer => customer.cpf === account.cpf)
-    customers[accountIndex].statements.push({
+    account.statements.push({
       depositId: uuidv4(),
       date: new Date(),
       type: 'credit',
