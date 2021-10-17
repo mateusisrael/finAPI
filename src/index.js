@@ -35,7 +35,7 @@ app.post("/account", (req, res) => {
     cpf,
     name,
     accountId: uuidv4(),
-    statements: [{id: "teste"}]
+    statements: []
   })
   console.log(customers)
   res.status(201).json({ message: "account created" })
@@ -48,7 +48,7 @@ app.get(
 )
 
 app.get(
-  "/statement/",
+  "/statement",
   verifyIfAccountExist, 
   (req, res) => res.status(200).json({ data: req.account.statements })
 )
@@ -57,14 +57,15 @@ app.post(
   "/deposit",
   verifyIfAccountExist,
   (req, res) => {
-    const { value } = req.body
+    const { amount, description } = req.body
     const account = req.account
     const accountIndex = customers.findIndex(customer => customer.cpf === account.cpf)
     customers[accountIndex].statements.push({
       depositId: uuidv4(),
       date: new Date(),
       type: 'credit',
-      amount: value
+      description,
+      amount: amount
     })
     res.status(200).json({ message: "Successfully deposited" })
   }
