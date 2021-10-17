@@ -56,6 +56,18 @@ app.put(
 )
 
 app.get(
+  "/account",
+  verifyIfAccountExist,
+  (req, res) => {
+    const account = req.account
+    res.status(200).json({
+      name: account.name,
+      balance: calculateAccountBalance(account.statements)
+    })
+  }
+)
+
+app.get(
   "/all",
   checkForCustomers,
   (req, res) => res.json({ data: customers })
