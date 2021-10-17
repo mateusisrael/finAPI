@@ -1,6 +1,8 @@
 const express = require("express")
 const app = express()
 const { v4: uuidv4 } = require("uuid")
+const calculateAccountBalance = require('./utils/calculateAccountBalance')
+
 
 app.use(express.json())
 const customers = []
@@ -104,11 +106,7 @@ app.post(
   (req, res) => {
     const { withdraw } = req.body
     const account = req.account
-    let accountValue = 0
-    account.statements.map(deposit => {
-      if(deposit.type === 'credit') return accountValue=accountValue+deposit.amount
-      else return accountValue=accountValue-deposit.amount
-    })
+    let accountValue = calculateAccountBalance(account.statements)
 
     if(accountValue >= withdraw) {
       account.statements.push({
