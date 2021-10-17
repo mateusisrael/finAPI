@@ -66,7 +66,32 @@ app.post(
       description,
       amount: amount
     })
-    res.status(200).json({ message: "Successfully deposited" })
+    res.status(201).json({ message: "Successfully deposited" })
+  }
+)
+
+app.post(
+  "/withdraw",
+  verifyIfAccountExist,
+  (req, res) => {
+    const { withdraw } = req.body
+    const account = req.account
+    let accountValue = 0
+    account.statements.map(deposit => {
+      if(deposit.type === 'credit') return accountValue=accountValue+deposit.amount
+      else return accountValue=accountValue-deposit.amount
+    })
+
+    if(accountValue >= withdraw) {
+      account.statements.push({
+        depositId: uuidv4(),
+        date: new Date(),
+        type: 'debit',
+        amount: withdraw
+      })
+
+      return res.status(201).send()
+    } else return res.status(400).json({ message: "Insufficient funds" })
   }
 )
 
