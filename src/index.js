@@ -30,7 +30,7 @@ app.post("/account", (req, res) => {
   // como passar isso para o middleware 'verifyIfAccountExist'?
   const costumerExist = customers.some((customer) => customer.cpf === cpf)
   if(costumerExist) {
-    res.status(400).json({ message: "Customer already exists"})
+    res.status(400).json({ message: "Account already exists"})
   }
 
   customers.push({
@@ -64,6 +64,17 @@ app.get(
       name: account.name,
       balance: calculateAccountBalance(account.statements)
     })
+  }
+)
+
+app.delete(
+  "/account",
+  verifyIfAccountExist,
+  (req, res) => {
+    const account = req.account
+    customers.splice(account, 1)
+    
+    res.status(204).send()
   }
 )
 
