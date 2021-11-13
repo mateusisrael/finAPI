@@ -1,0 +1,7 @@
+{
+  "openapi": "3.0.0",
+   "info": {
+     "title": "Fin API",
+     "description": "An API created in during Rocketseat Ignite"
+   }
+}

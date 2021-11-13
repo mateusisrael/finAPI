@@ -2,9 +2,16 @@ const express = require("express")
 const app = express()
 const { v4: uuidv4 } = require("uuid")
 const calculateAccountBalance = require('./utils/calculateAccountBalance')
+const swagguerUi = require("swagger-ui-express")
+const fs = require("fs")
+const path = require("path")
+
 
 
 app.use(express.json())
+const rawSwaggerFile = fs.readFileSync(path.dirname(__dirname)+'/swagger.json', 'utf8')
+const swaggerFile = JSON.parse(rawSwaggerFile)
+app.use("/api-docs", swagguerUi.serve, swagguerUi.setup(swaggerFile))
 const customers = []
 
 // middleware
