@@ -3,5 +3,76 @@
    "info": {
      "title": "Fin API",
      "description": "An API created in during Rocketseat Ignite"
-   }
+   },
+   "contact": {
+     "email": "mateuss.i.fernandes@gmail.com"
+   },
+  "paths": {
+    "/account": {
+      "post": {
+        "tags": ["Category"],
+        "summary": "Create new account",
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "Object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "cpf": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "Mateus",
+                  "cpf": "885.142.830-14"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type":"Object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Account Created"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Account already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type":"Object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "account already exists"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
